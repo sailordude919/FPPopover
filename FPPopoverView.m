@@ -329,7 +329,7 @@
     }
     
     CGFloat color[4];
-    int hex = PopoverDivisionHEX;
+    int hex = 0x3e454c;
     color[0] = ((float)((hex & 0xFF0000) >> 16))/255.0;
     color[1] = ((float)((hex & 0xFF00) >> 8))/255.0;
     color[2] = ((float)(hex & 0xFF))/255.0;
