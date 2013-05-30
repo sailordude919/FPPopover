@@ -9,46 +9,46 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "Constants.h"
 
-typedef enum FPPopoverArrowDirection: NSUInteger {
+typedef enum {
     FPPopoverArrowDirectionUp = 1UL << 0,
     FPPopoverArrowDirectionDown = 1UL << 1,
     FPPopoverArrowDirectionLeft = 1UL << 2,
     FPPopoverArrowDirectionRight = 1UL << 3,
-    FPPopoverNoArrow = 1UL << 4,
     
-    FPPopoverArrowDirectionVertical = FPPopoverArrowDirectionUp | FPPopoverArrowDirectionDown | FPPopoverNoArrow,
+    FPPopoverArrowDirectionVertical = FPPopoverArrowDirectionUp | FPPopoverArrowDirectionDown,
     FPPopoverArrowDirectionHorizontal = FPPopoverArrowDirectionLeft | FPPopoverArrowDirectionRight,
     
-    FPPopoverArrowDirectionAny = FPPopoverArrowDirectionUp | FPPopoverArrowDirectionDown | 
+    FPPopoverArrowDirectionAny = FPPopoverArrowDirectionUp | FPPopoverArrowDirectionDown |
     FPPopoverArrowDirectionLeft | FPPopoverArrowDirectionRight
     
 } FPPopoverArrowDirection;
 
-#ifndef FPPopoverArrowDirectionIsVertical
-    #define FPPopoverArrowDirectionIsVertical(direction)    ((direction) == FPPopoverArrowDirectionVertical || (direction) == FPPopoverArrowDirectionUp || (direction) == FPPopoverArrowDirectionDown || (direction) == FPPopoverNoArrow)
-#endif
 
-#ifndef FPPopoverArrowDirectionIsHorizontal
+#define FPPopoverArrowDirectionIsVertical(direction)    ((direction) == FPPopoverArrowDirectionVertical || (direction) == FPPopoverArrowDirectionUp || (direction) == FPPopoverArrowDirectionDown)
+
 #define FPPopoverArrowDirectionIsHorizontal(direction)    ((direction) == FPPopoverArrowDirectionHorizontal || (direction) == FPPopoverArrowDirectionLeft || (direction) == FPPopoverArrowDirectionRight)
-#endif
+
 
 typedef enum {
-    FPPopoverWhiteTint,
-    FPPopoverBlackTint,
-    FPPopoverLightGrayTint,
-    FPPopoverGreenTint,
-    FPPopoverRedTint,
+    FPPopoverBlackTint = 1UL << 0, // default
+    FPPopoverLightGrayTint = 1UL << 1,
+    FPPopoverGreenTint = 1UL << 2,
+    FPPopoverRedTint = 1UL << 3,
     FPPopoverDefaultTint = FPPopoverBlackTint
 } FPPopoverTint;
 
 @interface FPPopoverView : UIView
-
-@property(nonatomic,strong) NSString *title;
+{
+    //default FPPopoverArrowDirectionUp
+    FPPopoverArrowDirection _arrowDirection;
+    UIView *_contentView;
+    UILabel *_titleLabel;
+}
+@property(nonatomic,retain) NSString *title;
 @property(nonatomic,assign) CGPoint relativeOrigin;
 @property(nonatomic,assign) FPPopoverTint tint;
-@property(nonatomic,assign) BOOL draw3dBorder;
-@property(nonatomic,assign) BOOL border; //default YES
 
 -(void)setArrowDirection:(FPPopoverArrowDirection)arrowDirection;
 -(FPPopoverArrowDirection)arrowDirection;
